@@ -1,6 +1,8 @@
 package com.cubic.api;
 
+import com.cubic.model.Account;
 import com.cubic.model.Test;
+import com.cubic.service.AccountService;
 import com.cubic.service.TestService;
 import com.curbic.base.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import java.util.List;
 public class TestApi {
     @Autowired
     private TestService testService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping("/add")
     public String home(@RequestParam String name)
@@ -30,11 +34,8 @@ public class TestApi {
     @RequestMapping("/list")
     public String list()
     {
-        List<Test> list=testService.list();
-        for(Test test:list){
-            System.out.println("  id:="+test.getId());
-            System.out.println("name:="+test.getName());
-        }
+        Account account=accountService.getByName("admin");
+        System.out.println(account.getAuths());
         return "true";
     }
 

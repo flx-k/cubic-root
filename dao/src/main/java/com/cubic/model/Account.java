@@ -1,16 +1,67 @@
 package com.cubic.model;
 
-import sun.security.timestamp.TSRequest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class Account {
+public class Account implements UserDetails {
     private String id;
     private String name;
     private Timestamp createTime;
-    private int level;
+    private Integer level;
     private Timestamp lastOnlineTime;
-    private String psw;
+    private String pwd;
+    private String auths;
+    private Boolean expired;
+    private Boolean locked;
+    private Boolean credentialsExpired;
+    private Boolean enable;
+
+
+    public Boolean getExpired() {
+        return expired;
+    }
+
+    public void setExpired(Boolean expired) {
+        this.expired = expired;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean getCredentialsExpired() {
+        return credentialsExpired;
+    }
+
+    public void setCredentialsExpired(Boolean credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
+    }
+
+    public Boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
+    }
+
+    public String getAuths() {
+        return auths;
+    }
+
+    public void setAuths(String auths) {
+        this.auths = auths;
+    }
 
     public String getId() {
         return id;
@@ -36,11 +87,11 @@ public class Account {
         this.createTime = createTime;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -52,11 +103,55 @@ public class Account {
         this.lastOnlineTime = lastOnlineTime;
     }
 
-    public String getPsw() {
-        return psw;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPsw(String psw) {
-        this.psw = psw;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        if(auths.indexOf(",")>0){
+           for(String str:auths.split(",")){
+               if(null!=str&&!"".equals(str.trim()))
+                    authorities.add(new SimpleGrantedAuthority(str.toUpperCase()));
+           }
+        }else
+            authorities.add(new SimpleGrantedAuthority("USER"));
+
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return pwd;
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !expired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return !credentialsExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enable;
     }
 }

@@ -2,9 +2,8 @@ package com.cubic.dao;
 
 import com.curbic.base.BaseSQL;
 import com.curbic.base.SimpleParam;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.UpdateProvider;
+import com.curbic.base.StringUtil;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -23,4 +22,9 @@ public interface BaseDAO<T> {
     List<T> select(SimpleParam simpleParam);
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
     List<T> sql_select(String sql);
+    @SelectProvider(type = BaseSQL.class, method = "buildSql")
+    T get(String sql);
+    @SelectProvider(type = BaseSQL.class, method = "getOne")
+    T getOne(T obj);
+
 }

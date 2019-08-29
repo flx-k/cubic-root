@@ -9,8 +9,10 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   security:
     basic:
-      enabled: true
+      enabled: false
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.cubic.model
+  configuration:
+    map-underscore-to-camel-case: true
