@@ -16,3 +16,6 @@ mybatis:
   type-aliases-package: com.cubic.model
   configuration:
     map-underscore-to-camel-case: true
+
+logging:
+  config: classpath:log4j2.xml
