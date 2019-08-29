@@ -14,11 +14,9 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private AccountService accountService;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Account account=accountService.getByName(userName);
-        BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
-        account.setPwd(encoder.encode(account.getPwd()));
-        return account;
+        return accountService.getByName(userName);
     }
 }

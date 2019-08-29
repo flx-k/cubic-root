@@ -32,6 +32,10 @@ public class AccountService {
         account.setName(name);
         return accountDAO.getOne(account);
     }
+
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("111111"));
+    }
 //    public List<Test> list(){
 //        return testDAO.sql_select("select * from test" );
 //    }
