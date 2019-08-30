@@ -8,6 +8,8 @@
 		<module>service</module>
 		<module>util</module>
 		<module>dao</module>
+		<module>plug</module>
+		<module>plugs</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

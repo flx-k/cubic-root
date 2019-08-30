@@ -8,14 +8,17 @@
         <outputRelativeToContentRoot value="true" />
         <module name="util" />
         <module name="api" />
-        <module name="service" />
+        <module name="plugs" />
         <module name="dao" />
+        <module name="service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api" target="1.8" />
       <module name="cubic-root" target="1.8" />
       <module name="dao" target="1.8" />
+      <module name="plug" target="1.8" />
+      <module name="plugs" target="1.8" />
       <module name="service" target="1.8" />
       <module name="util" target="1.8" />
     </bytecodeTargetLevel>
@@ -25,6 +28,8 @@
       <module name="api" options="-parameters" />
       <module name="cubic-root" options="-parameters" />
       <module name="dao" options="-parameters" />
+      <module name="plug" options="-parameters" />
+      <module name="plugs" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="util" options="-parameters" />
     </option>

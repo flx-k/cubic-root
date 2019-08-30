@@ -12,6 +12,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="util" />
+    <orderEntry type="library" name="Maven: com.cubic:plug:0.0.1-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="plugs" />
     <orderEntry type="module" module-name="dao" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.1.7.RELEASE" level="project" />

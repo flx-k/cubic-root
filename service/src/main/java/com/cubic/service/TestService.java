@@ -2,7 +2,7 @@ package com.cubic.service;
 
 import com.cubic.dao.TestDAO;
 import com.cubic.model.Test;
-import com.curbic.base.SimpleParam;
+import com.cubic.base.SimpleParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

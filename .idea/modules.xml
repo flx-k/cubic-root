@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/cubic-root.iml" filepath="$PROJECT_DIR$/.idea/cubic-root.iml" />
       <module fileurl="file://$PROJECT_DIR$/dao/dao.iml" filepath="$PROJECT_DIR$/dao/dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugs/plugs.iml" filepath="$PROJECT_DIR$/plugs/plugs.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
       <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
     </modules>

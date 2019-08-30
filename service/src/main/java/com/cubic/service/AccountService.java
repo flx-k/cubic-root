@@ -2,7 +2,7 @@ package com.cubic.service;
 
 import com.cubic.dao.AccountDAO;
 import com.cubic.model.Account;
-import com.curbic.base.StringUtil;
+import com.cubic.base.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

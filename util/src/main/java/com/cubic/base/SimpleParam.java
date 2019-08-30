@@ -1,4 +1,4 @@
-package com.curbic.base;
+package com.cubic.base;
 
 
 import java.util.Map;

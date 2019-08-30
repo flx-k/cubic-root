@@ -1,10 +1,11 @@
 package com.cubic.api;
 
+import com.cubic.base.ClassUtil;
+import com.cubic.imp.TestImp;
 import com.cubic.model.Account;
-import com.cubic.model.Test;
 import com.cubic.service.AccountService;
 import com.cubic.service.TestService;
-import com.curbic.base.StringUtil;
+import com.cubic.base.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import javax.rmi.CORBA.Util;
+
 
 @RestController
-public class TestApi {
+public class TestApi{
     Logger logger= LogManager.getLogger(TestApi.class);
     @Autowired
     private TestService testService;
@@ -45,4 +47,13 @@ public class TestApi {
         return "true";
     }
 
+    @RequestMapping("/testPlug")
+    public String testPlug() throws Exception {
+        logger.info("testPlug");
+        String classname="com.myplug.TestPlug";
+        ClassUtil.loadJarsFromAppFolder("D:/11/plug");
+        TestImp testImp= (TestImp) ClassUtil.getPlugClass(classname);
+        testImp.test();
+        return testImp.retuStr();
+    }
 }

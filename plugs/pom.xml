@@ -7,23 +7,9 @@
         <groupId>com.cubic</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>util</artifactId>
-    <dependencies>
-        <dependency>
-            <groupId>com.cubic</groupId>
-            <artifactId>plug</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cubic</groupId>
-            <artifactId>plugs</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+    <artifactId>plugs</artifactId>
 
 
 </project>

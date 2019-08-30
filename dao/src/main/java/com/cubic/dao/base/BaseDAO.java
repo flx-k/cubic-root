@@ -1,8 +1,7 @@
 package com.cubic.dao.base;
 
-import com.curbic.base.BaseSQL;
-import com.curbic.base.SimpleParam;
-import com.curbic.base.StringUtil;
+import com.cubic.base.BaseSQL;
+import com.cubic.base.SimpleParam;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

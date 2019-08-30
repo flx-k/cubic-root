@@ -1,12 +1,10 @@
-package com.curbic.base;
+package com.cubic.base;
 
 import org.apache.ibatis.jdbc.SQL;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BaseSQL {
     public String buildSql(final String sql) {
