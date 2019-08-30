@@ -6,9 +6,6 @@ public class StringUtil {
     public static String buildID(){
         return UUID.randomUUID().toString();
     }
-    public static String buildPWD(String str){
-        return UUID.randomUUID().toString();
-    }
     public static String upper2Lower(String str){
         char[] cs=str.toCharArray();
         StringBuffer sb=new StringBuffer();
