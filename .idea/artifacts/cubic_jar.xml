@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="cubic:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cubic_jar</output-path>
+    <root id="archive" name="dao.jar">
+      <element id="module-output" name="dao" />
+      <element id="module-output" name="util" />
+      <element id="module-output" name="plugs" />
+      <element id="module-output" name="service" />
+    </root>
+  </artifact>
+</component>
