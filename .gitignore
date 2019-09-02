@@ -25,3 +25,4 @@ hs_err_pid*
 .idea/workspace.xml
 out/artifacts/cubic_jar/dao/META-INF/dao.kotlin_module
 out/artifacts/cubic_jar/dao/META-INF/util.kotlin_module
+.idea/workspace.xml
