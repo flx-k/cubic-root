@@ -52,8 +52,12 @@ public class TestApi{
     public String list()
     {
         logger.info("list");
+
         Account account=accountService.getByName("admin");
+
         System.out.println(account.getAuths());
+        accountService.testSQL("SELECT idError querying database. Cause: java.lang.UnsupportedOperationException \r\n" +
+                "FROM account");
         return "true";
     }
     @Autowired
@@ -67,8 +71,7 @@ public class TestApi{
             for(String str:applicationContext.getBeanDefinitionNames()){
                 System.out.println(str);
             }
-            System.out.println(applicationContext.getBeanDefinitionNames());
-            AccountService testImp= (AccountService) applicationContext.getBean(plugName.toUpperCase());
+            AccountService testImp= (AccountService) applicationContext.getBean(classname);
 //            AccountService testImp= (AccountService) ClassUtil.getPlugClass(classname);
 //            Account account=new Account();
 //            account.setName("admin");

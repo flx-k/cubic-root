@@ -31,7 +31,7 @@ public class TestService {
         simpleParam.setWhere(map);
         testDAO.update(simpleParam);
     }
-    public List<Test> list(){
-        return testDAO.sql_select("select * from test" );
-    }
+//    public List<Test> list(){
+//        return testDAO.sql_select("select * from test" );
+//    }
 }

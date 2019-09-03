@@ -3,11 +3,13 @@ package com.cubic.base;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.lang.reflect.Field;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BaseSQL {
     public String buildSql(final String sql) {
+        System.out.println(sql);
         return sql;
     }
 
@@ -16,9 +18,9 @@ public class BaseSQL {
         Class cla = obj.getClass();
         Field[] fields = cla.getDeclaredFields();
         List<String> arr = new ArrayList();
+        sql.SELECT("*");
         for (Field field : fields) {
             field.setAccessible(true);
-            sql.SELECT(StringUtil.upper2Lower(field.getName()));
             try {
                 if (null != field.get(obj)) {
                     arr.add(field.getName());
@@ -68,6 +70,20 @@ public class BaseSQL {
         for (String str : param.getFields()) {
             sql.SELECT(StringUtil.upper2Lower(str));
         }
+        sql.FROM(StringUtil.upper2Lower(param.getClassName()));
+        for (String key : param.getWhere().keySet()) {
+            if (key.equals("eq")) {
+                sql.WHERE(key + "='" + param.getWhere().get(key) + "'");
+            }
+        }
+        System.out.println(sql.toString());
+        return sql.toString();
+    }
+    public String count(final SimpleParam param) {
+        SQL sql = new SQL();
+
+        sql.SELECT("count(*)");
+
         sql.FROM(StringUtil.upper2Lower(param.getClassName()));
         for (String key : param.getWhere().keySet()) {
             if (key.equals("eq")) {

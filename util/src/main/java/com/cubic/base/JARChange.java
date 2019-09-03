@@ -50,7 +50,10 @@ public class JARChange {
 //            classMap.putAll(cMap);
 //        }
 //    }
-    public static void run(String path, ApplicationContext applicationContext, BeanDefinitionRegistry registry) throws Exception {
+    public static void run(String path, ApplicationContext applicationContext) throws Exception {
+
+
+
         FileFilter fileFilter= FileFilterUtils.and(new IOFileFilter() {
             @Override
             public boolean accept(File file) {
@@ -69,18 +72,21 @@ public class JARChange {
                 logger.info("onDirectoryChange::"+directory.getAbsolutePath());
                 super.onDirectoryChange(directory);
             }
+
+
+
             @Override
             public void onFileChange(File file) {
-                logger.info("onFileCreate::"+file.getAbsolutePath());
+                logger.info("onFileChange::"+file.getAbsolutePath());
                 try {
                     ClassUtil.loadJarsFromAppFolder(file.getAbsolutePath());
                 } catch (Exception e) {
                     logger.error(e.getMessage(),e);
                     return;
                 }
-                Map<String,String> cMap=new HashMap();
+                Map<String,String> cMap;
                 try {
-                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext,registry);
+                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext);
                 } catch (IOException e) {
                     logger.error(e.getMessage(),e);
                     return;
@@ -102,7 +108,7 @@ public class JARChange {
                 }
                 Map<String,String> cMap=new HashMap();
                 try {
-                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext,registry);
+                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext);
                 } catch (IOException e) {
                     logger.error(e.getMessage(),e);
                     return;

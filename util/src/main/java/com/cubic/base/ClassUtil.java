@@ -41,6 +41,7 @@ public class ClassUtil {
         } else {
             loadJarFile(f);
         }
+
     }
 
 
@@ -55,7 +56,7 @@ public class ClassUtil {
         logger.info("url::"+url);
         method.invoke(classLoader,url);
     }
-    public static Map<String, String> getJarMap(String path,ApplicationContext applicationContext,BeanDefinitionRegistry registry) throws IOException {
+    public static Map<String, String> getJarMap(String path,ApplicationContext applicationContext) throws IOException {
         Map<String,String> map=new HashMap<>();
         JarFile jarFile=new JarFile(path);
         Enumeration<JarEntry> entrys=jarFile.entries();
@@ -75,12 +76,16 @@ public class ClassUtil {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
                 BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(cla);
 //                BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
                 DefaultListableBeanFactory defaultListableBeanFactory= (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-                AnnotatedGenericBeanDefinition genericBeanDefinition = new AnnotatedGenericBeanDefinition(cla);
 //                genericBeanDefinition.setScope("singleton");/**/
-                defaultListableBeanFactory.registerBeanDefinition(names[names.length-1].toUpperCase(),beanDefinitionBuilder.getBeanDefinition());
+                beanDefinitionBuilder.setScope("singleton");
+//                if(defaultListableBeanFactory)
+                if(applicationContext.containsBean(classname))
+                    defaultListableBeanFactory.removeBeanDefinition(classname);
+                defaultListableBeanFactory.registerBeanDefinition(classname,beanDefinitionBuilder.getBeanDefinition());
             }
         }
         return map;

@@ -12,7 +12,7 @@ public class ExceptionHandle {
         if(NoPlugException.class==exception.getClass()){
             map.put("error","插件不存在");
         }else{
-            map.put("error","未知错误");
+            map.put("error",exception.getMessage());
         }
         return map;
     }

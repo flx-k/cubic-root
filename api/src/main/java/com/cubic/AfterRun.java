@@ -28,10 +28,10 @@ public class AfterRun implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
         logger.info("初始化完成了.........");
 //        JARChange.init("D:/11/plug/");
-        JARChange.run("D:/11/plug/",applicationContext,new SimpleBeanDefinitionRegistry());
+//        JARChange.init("D:/11/plug/",applicationContext);
+        JARChange.run("D:/11/plug/",applicationContext);
         logger.info("初始化完成了.........");
     }
 }

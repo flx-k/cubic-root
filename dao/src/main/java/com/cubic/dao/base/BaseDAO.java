@@ -5,6 +5,7 @@ import com.cubic.base.SimpleParam;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BaseDAO<T> {
     @InsertProvider(type = BaseSQL.class, method = "insert")
@@ -19,8 +20,12 @@ public interface BaseDAO<T> {
 
     @SelectProvider(type = BaseSQL.class, method = "select")
     List<T> select(SimpleParam simpleParam);
+    @SelectProvider(type = BaseSQL.class, method = "count")
+    Long count(SimpleParam simpleParam);
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
-    List<T> sql_select(String sql);
+    Long sql_count(String sql);
+    @SelectProvider(type = BaseSQL.class, method = "buildSql")
+    List<Class<?>> sql_select(String sql);
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
     T get(String sql);
     @SelectProvider(type = BaseSQL.class, method = "getOne")

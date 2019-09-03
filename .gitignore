@@ -21,7 +21,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-.idea/workspace.xml
-.idea/workspace.xml
-out/artifacts/cubic_jar/dao/META-INF/dao.kotlin_module
-out/artifacts/cubic_jar/dao/META-INF/util.kotlin_module
+.idea/
+out/
+

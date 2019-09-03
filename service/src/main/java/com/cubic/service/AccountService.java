@@ -3,11 +3,14 @@ package com.cubic.service;
 import com.cubic.dao.AccountDAO;
 import com.cubic.model.Account;
 import com.cubic.base.StringUtil;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountService {
@@ -32,6 +35,21 @@ public class AccountService {
         account.setName(name);
         return accountDAO.getOne(account);
     }
+    public void testSQL(String sql){
+        Gson g=new Gson();
+//        List<Object> ls=accountDAO.sql_select("select id from account");
+//        for(Object str:ls){
+//            System.out.println((String)str);
+//        }
+        List ls2=accountDAO.sql_select("select * from test");
+        for(Object str:ls2){
+
+            Account a=g.fromJson(g.toJson(str),Account.class);
+            System.out.println(a.getId());
+        }
+//        System.out.println(ls.size());
+    }
+
 
     public static void main(String[] args) {
         System.out.println(new BCryptPasswordEncoder().encode("111111"));
