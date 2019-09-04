@@ -25,9 +25,11 @@ public interface BaseDAO<T> {
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
     Long sql_count(String sql);
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
-    List<Class<?>> sql_select(String sql);
+    List<Map<String,Object>> sql_select(String sql);
+
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
-    T get(String sql);
+    Map<String,Object> get(String sql);
+
     @SelectProvider(type = BaseSQL.class, method = "getOne")
     T getOne(T obj);
 

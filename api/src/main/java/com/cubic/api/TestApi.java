@@ -60,54 +60,8 @@ public class TestApi{
                 "FROM account");
         return "true";
     }
-    @Autowired
-    private ApplicationContext applicationContext;
-    @RequestMapping("/test/{plugName}")
-    public Map testPlug(@PathVariable("plugName") String plugName) {
-        logger.info("testPlug");
-        Map<String,Object> map=new HashMap<>();
-        try {
-            String classname = JARChange.getClassName(plugName);
-            for(String str:applicationContext.getBeanDefinitionNames()){
-                System.out.println(str);
-            }
-            AccountService testImp= (AccountService) applicationContext.getBean(classname);
-//            AccountService testImp= (AccountService) ClassUtil.getPlugClass(classname);
-//            Account account=new Account();
-//            account.setName("admin");
-//            map.put("status",true);
-            map.put("datas", testImp.getByName("admin"));
-            return map;
-        } catch (Exception e) {
-            return ExceptionHandle.buildExceptMsg(e);
-        }
 
 
-    }
 
-    @RequestMapping("/plug/{plugName}/add")
-    public String plugAdd(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/delete")
-    public String plugDelete(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/update")
-    public String plugUpdate(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/get")
-    public String plugGet(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/list")
-    public String plugList(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
+
 }
