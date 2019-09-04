@@ -5,6 +5,6 @@ public class ExistException extends Exception{
         super();
     }
     public ExistException(String msg) {
-        super(msg);
+        super(msg+"[已存在]");
     }
 }

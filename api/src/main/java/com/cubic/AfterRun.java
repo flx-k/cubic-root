@@ -30,8 +30,9 @@ public class AfterRun implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         logger.info("初始化完成了.........");
 //        JARChange.init("D:/11/plug/");
-//        JARChange.init("D:/11/plug/",applicationContext);
+
         JARChange.run("D:/11/plug/",applicationContext);
+//        JARChange.init("D:/11/plug/",applicationContext);
         logger.info("初始化完成了.........");
     }
 }

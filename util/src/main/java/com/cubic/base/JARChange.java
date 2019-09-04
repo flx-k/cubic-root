@@ -9,14 +9,13 @@ import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,31 +28,8 @@ public class JARChange {
             throw new NoPlugException(key);
         return classMap.get(key.toUpperCase());
     }
-//    public static void init(String path){
-//        File file=new File(path);
-//        logger.info("onFileCreate::"+file.getAbsolutePath());
-//        try {
-//            ClassUtil.loadJarsFromAppFolder(file.getAbsolutePath());
-//        } catch (Exception e) {
-//            logger.error(e.getMessage(),e);
-//            return;
-//        }
-//        Map<String,String> cMap=new HashMap();
-//        try {
-//            cMap=ClassUtil.getJarMap(file.getAbsolutePath());
-//        } catch (IOException e) {
-//            logger.error(e.getMessage(),e);
-//            return;
-//        }
-//        if(cMap.size()>0){
-//            fileClassMap.put(file.getAbsolutePath(),cMap.keySet());
-//            classMap.putAll(cMap);
-//        }
-//    }
+
     public static void run(String path, ApplicationContext applicationContext) throws Exception {
-
-
-
         FileFilter fileFilter= FileFilterUtils.and(new IOFileFilter() {
             @Override
             public boolean accept(File file) {
@@ -72,51 +48,16 @@ public class JARChange {
                 logger.info("onDirectoryChange::"+directory.getAbsolutePath());
                 super.onDirectoryChange(directory);
             }
-
-
-
             @Override
             public void onFileChange(File file) {
                 logger.info("onFileChange::"+file.getAbsolutePath());
-                try {
-                    ClassUtil.loadJarsFromAppFolder(file.getAbsolutePath());
-                } catch (Exception e) {
-                    logger.error(e.getMessage(),e);
-                    return;
-                }
-                Map<String,String> cMap;
-                try {
-                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext);
-                } catch (IOException e) {
-                    logger.error(e.getMessage(),e);
-                    return;
-                }
-                if(cMap.size()>0){
-                    fileClassMap.put(file.getAbsolutePath(),cMap.keySet());
-                    classMap.putAll(cMap);
-                }
+                createBean(file,applicationContext);
                 super.onFileChange(file);
             }
             @Override
             public void onFileCreate(File file) {
                 logger.info("onFileCreate::"+file.getAbsolutePath());
-                try {
-                    ClassUtil.loadJarsFromAppFolder(file.getAbsolutePath());
-                } catch (Exception e) {
-                    logger.error(e.getMessage(),e);
-                    return;
-                }
-                Map<String,String> cMap=new HashMap();
-                try {
-                    cMap=ClassUtil.getJarMap(file.getAbsolutePath(),applicationContext);
-                } catch (IOException e) {
-                    logger.error(e.getMessage(),e);
-                    return;
-                }
-                if(cMap.size()>0){
-                    fileClassMap.put(file.getAbsolutePath(),cMap.keySet());
-                    classMap.putAll(cMap);
-                }
+                createBean(file,applicationContext);
                 super.onFileCreate(file);
             }
             @Override
@@ -128,5 +69,36 @@ public class JARChange {
         FileAlterationMonitor filealterationMonitor=new FileAlterationMonitor(1000);
         filealterationMonitor.addObserver(fileAlterationObserver);
         filealterationMonitor.start();
+
+        File f = new File(path);
+        if (f.isDirectory()) {
+            for (File _f : f.listFiles()) {
+                if (_f.isFile()&&_f.getAbsolutePath().endsWith(".jar")) {
+                    createBean(_f,applicationContext);
+                }
+            }
+        }
+    }
+    private static void createBean(File file,ApplicationContext applicationContext){
+        Map<String,String> cMap;
+        try {
+            cMap=ClassUtil.registerBean(file,applicationContext);
+        } catch (IOException e) {
+            logger.error(e.getMessage(),e);
+            return;
+        } catch (NoSuchMethodException e) {
+            logger.error(e.getMessage(),e);
+            return;
+        } catch (IllegalAccessException e) {
+            logger.error(e.getMessage(),e);
+            return;
+        } catch (InvocationTargetException e) {
+            logger.error(e.getMessage(),e);
+            return;
+        }
+        if(cMap.size()>0){
+            fileClassMap.put(file.getAbsolutePath(),cMap.keySet());
+            classMap.putAll(cMap);
+        }
     }
 }

@@ -1,6 +1,9 @@
 package com.cubic.base;
 
+import com.cubic.exception.CantDoException;
+import com.cubic.exception.ExistException;
 import com.cubic.exception.NoPlugException;
+import com.cubic.exception.NotExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +13,16 @@ public class ExceptionHandle {
         Map<String,Object> map=new HashMap<>();
         map.put("status",false);
         if(NoPlugException.class==exception.getClass()){
-            map.put("error","插件不存在");
-        }else{
             map.put("error",exception.getMessage());
+        }else if(ExistException.class==exception.getClass()){
+            map.put("error",exception.getMessage());
+        }else if(NotExistException.class==exception.getClass()){
+            map.put("error",exception.getMessage());
+        }else if(CantDoException.class==exception.getClass()){
+            map.put("error",exception.getMessage());
+        }
+        else{
+            map.put("error","未知问题:"+exception.getMessage());
         }
         return map;
     }

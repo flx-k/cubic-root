@@ -5,6 +5,6 @@ public class NoPlugException extends Exception{
         super();
     }
     public NoPlugException(String msg) {
-        super(msg);
+        super(msg+" [插件不存在]");
     }
 }

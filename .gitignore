@@ -18,3 +18,8 @@
 *.zip
 *.tar.gz
 *.rar
+out\*
+
+.idea/*
+.idea/workspace.xml
+out/*
