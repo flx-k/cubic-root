@@ -22,12 +22,12 @@ public class PlugApi {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @RequestMapping("/plug/add/{plugName}")
+    @RequestMapping("/plug/{plugName}/add")
     public String plugAdd(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
         logger.info("testPlug");
         return plugName+"::"+name;
     }
-    @RequestMapping("/plug/delete/{plugName}")
+    @RequestMapping("/plug/{plugName}/delete")
     public String plugDelete(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
         logger.info("testPlug");
         return plugName+"::"+name;
@@ -37,12 +37,12 @@ public class PlugApi {
         logger.info("testPlug");
         return plugName+"::"+name;
     }
-    @RequestMapping("/plug/get/{plugName}")
+    @RequestMapping("/plug/{plugName}/get")
     public String plugGet(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
         logger.info("testPlug");
         return plugName+"::"+name;
     }
-    @RequestMapping("/plug/list/{plugName}")
+    @RequestMapping("/plug/{plugName}/list")
     public Map<String, Object> plugList(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
         logger.info("testPlug");
         Map<String,Object> map=new HashMap<>();
