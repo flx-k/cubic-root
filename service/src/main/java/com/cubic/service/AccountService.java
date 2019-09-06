@@ -1,6 +1,7 @@
 package com.cubic.service;
 
 import com.cubic.dao.AccountDAO;
+import com.cubic.dao.plug.PlugDAO;
 import com.cubic.model.Account;
 import com.cubic.base.StringUtil;
 import com.google.gson.Gson;
@@ -10,14 +11,16 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class AccountService {
+public final class AccountService {
     @Autowired
     private AccountDAO accountDAO;
+    @Autowired
+    private PlugDAO plugDAO;
 
     public void insertUser(Account account){
+
         account.setAuths("USER");
         account.setPwd(new BCryptPasswordEncoder().encode(account.getPwd()));
         account.setEnable(true);

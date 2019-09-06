@@ -1,4 +1,4 @@
-package com.cubic.dao.base;
+package com.cubic.dao.plug;
 
 import com.cubic.base.BaseSQL;
 import com.cubic.base.SimpleParam;

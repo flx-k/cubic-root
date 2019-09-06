@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class TestService {
+public final class TestService {
     @Autowired
     private TestDAO testDAO;
 

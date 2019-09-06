@@ -14,6 +14,10 @@ import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.thymeleaf.spring5.context.SpringContextUtils;
 
 import java.io.File;
@@ -42,7 +46,7 @@ public class ClassUtil {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    public static Map<String, String> registerBean(File path, ApplicationContext applicationContext) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static Map<String, String> registerBean(File path, ApplicationContext applicationContext) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
         URL url=path.toURI().toURL();
         URLClassLoader classLoader= (URLClassLoader) ClassLoader.getSystemClassLoader();
         Method method=URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
@@ -60,19 +64,33 @@ public class ClassUtil {
             if(!jarEntry.isDirectory()&&name.endsWith(".class")){
                 classname=name.substring(0,name.length()-6).replace("/",".");
                 names=classname.split("\\.");
-                map.put(names[names.length-1].toUpperCase(),classname);
+                map.put("SERVER-PLUG-"+names[names.length-1].toUpperCase(),classname);
                 Class cla= null;
                 try {
                     cla = Class.forName(classname);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+//                if(classname.indexOf("Cpntroller")>=0){
+//                    Method[] methods=cla.getMethods();
+//                    RequestMappingHandlerMapping requestMappingHandlerMapping=applicationContext.getBean(RequestMappingHandlerMapping.class);
+//                    Method method1= ReflectionUtils.findMethod(RequestMappingHandlerMapping.class,"getMappingForMethod",Method.class,Class.class);
+//                    method1.setAccessible(true);
+//                    for(Method m:methods){
+//                        if(m.getAnnotation(RequestMapping.class)!=null){
+//                            RequestMappingInfo mapping_info =
+//                                    (RequestMappingInfo) method1.invoke(requestMappingHandlerMapping, m,cla);
+//                            requestMappingHandlerMapping.registerMapping(mapping_info,cla.newInstance(),m);
+//                        }
+//                    }
+//                }
                 BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(cla);
                 DefaultListableBeanFactory defaultListableBeanFactory= (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
                 beanDefinitionBuilder.setScope("singleton");
                 if(applicationContext.containsBean(classname))
                     defaultListableBeanFactory.removeBeanDefinition(classname);
                 defaultListableBeanFactory.registerBeanDefinition(classname,beanDefinitionBuilder.getBeanDefinition());
+
             }
         }
         return map;

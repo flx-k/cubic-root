@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PlayerService {
+public final class PlayerService {
     @Autowired
     private PlayerDAO playerDAO;
 

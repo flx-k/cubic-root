@@ -24,6 +24,7 @@ public class JARChange {
     public static Map<String,String> classMap=new HashMap<>();
     public static Map<String, Set> fileClassMap=new HashMap<>();
     public static String getClassName(String key) throws NoPlugException {
+        key="server-plug-"+key;
         if(!classMap.containsKey(key.toUpperCase()))
             throw new NoPlugException(key);
         return classMap.get(key.toUpperCase());
@@ -93,6 +94,9 @@ public class JARChange {
             logger.error(e.getMessage(),e);
             return;
         } catch (InvocationTargetException e) {
+            logger.error(e.getMessage(),e);
+            return;
+        } catch (InstantiationException e) {
             logger.error(e.getMessage(),e);
             return;
         }

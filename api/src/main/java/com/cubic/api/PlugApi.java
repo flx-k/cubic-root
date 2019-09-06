@@ -2,8 +2,9 @@ package com.cubic.api;
 
 import com.cubic.base.ExceptionHandle;
 import com.cubic.base.JARChange;
+import com.cubic.exception.NoPlugException;
 import com.cubic.service.AccountService;
-import com.cubic.service.PlugService;
+import com.cubic.service.plug.PlugService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,41 +23,98 @@ import java.util.Map;
 public class PlugApi {
     Logger logger= LogManager.getLogger(PlugApi.class);
     @Autowired
-    private ApplicationContext applicationContext;
+    public ApplicationContext applicationContext;
 
-    @RequestMapping("/plug/{plugName}/add")
-    public String plugAdd(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
+    private PlugService getPlugService(String plugName) throws NoPlugException {
+        String classname;
+        try{
+            classname = JARChange.getClassName(plugName);
+        }catch (Exception e){
+            throw new NoPlugException(plugName);
+        }
+        return (PlugService) applicationContext.getBean(classname);
     }
-    @RequestMapping("/plug/{plugName}/delete")
-    public String plugDelete(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
+    private Object executePlugService(String plugName,String methodName,Object...obj) throws NoPlugException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        try{
+            String classname = JARChange.getClassName(plugName);
+            Object object=applicationContext.getBean(classname);
+            Class cla=object.getClass();
+            Method method=cla.getDeclaredMethod(methodName,Object.class);
+            return method.invoke(object,obj);
+        }catch (Exception e){
+            throw new NoPlugException(plugName);
+        }
+
     }
-    @RequestMapping("/plug/update/{plugName}")
-    public String plugUpdate(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/get")
-    public String plugGet(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
-        logger.info("testPlug");
-        return plugName+"::"+name;
-    }
-    @RequestMapping("/plug/{plugName}/list")
-    public Map<String, Object> plugList(@PathVariable("plugName") String plugName, @RequestParam String name) throws Exception {
+
+    @RequestMapping("/plug/{plugName}/create")
+    public Map<String, Object> create(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
         logger.info("testPlug");
         Map<String,Object> map=new HashMap<>();
         try {
-            String classname;
-            try{
-                classname = JARChange.getClassName(plugName);
-            }catch (Exception e){
-                classname = "accountService";
-            }
-            PlugService testImp= (PlugService) applicationContext.getBean(classname);
-            map.put("datas", testImp.sql_select("admin"));
+            map.put("status",true);
+            map.put("datas", getPlugService(plugName).create(obj));
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
+    @RequestMapping("/plug/{plugName}/delete")
+    public Map<String, Object> plugList(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas", getPlugService(plugName).delete(obj));
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
+    @RequestMapping("/plug/{plugName}/update")
+    public Map<String, Object> update(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas", getPlugService(plugName).update(obj));
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
+    @RequestMapping("/plug/{plugName}/list")
+    public Map<String, Object> list(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas", getPlugService(plugName).list(obj));
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
+    @RequestMapping("/plug/{plugName}/get")
+    public Map<String, Object> get(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas", getPlugService(plugName).get(obj));
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
+    @RequestMapping("/plug/{plugName}/m/{method}")
+    public Map<String, Object> method(@PathVariable("plugName") String plugName,@PathVariable("method") String method, @RequestParam Object obj) throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas", executePlugService(plugName,method,obj));
             return map;
         } catch (Exception e) {
             return ExceptionHandle.buildExceptMsg(e);
@@ -77,7 +137,5 @@ public class PlugApi {
         } catch (Exception e) {
             return ExceptionHandle.buildExceptMsg(e);
         }
-
-
     }
 }
