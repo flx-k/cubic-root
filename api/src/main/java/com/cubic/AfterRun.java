@@ -19,20 +19,15 @@ import org.springframework.stereotype.Component;
  * 初始化完成后的操作
  */
 @Component
-public class AfterRun implements ApplicationRunner {
+public final class AfterRun implements ApplicationRunner {
     Logger logger= LogManager.getLogger(AfterRun.class);
     @Autowired
-    private AccountService accountService;
-    @Autowired
-    private ApplicationContext applicationContext;
+    public ApplicationContext applicationContext;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        logger.info("初始化完成了.........");
-//        JARChange.init("D:/11/plug/");
-
+        logger.info("加载插件.........");
         JARChange.run("D:/11/plug/",applicationContext);
-//        JARChange.init("D:/11/plug/",applicationContext);
-        logger.info("初始化完成了.........");
+        logger.info("插件加载完成.........");
     }
 }

@@ -1,5 +1,6 @@
 package com.cubic.api;
 
+import com.cubic.base.ClassUtil;
 import com.cubic.base.ExceptionHandle;
 import com.cubic.base.JARChange;
 import com.cubic.exception.NoPlugException;
@@ -47,7 +48,18 @@ public class PlugApi {
         }
 
     }
-
+    @RequestMapping("/plug/listPlugClass")
+    public Map<String, Object> listPlug() throws Exception {
+        logger.info("testPlug");
+        Map<String,Object> map=new HashMap<>();
+        try {
+            map.put("status",true);
+            map.put("datas",JARChange.classMap);
+            return map;
+        } catch (Exception e) {
+            return ExceptionHandle.buildExceptMsg(e);
+        }
+    }
     @RequestMapping("/plug/{plugName}/create")
     public Map<String, Object> create(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
         logger.info("testPlug");
@@ -60,6 +72,7 @@ public class PlugApi {
             return ExceptionHandle.buildExceptMsg(e);
         }
     }
+
     @RequestMapping("/plug/{plugName}/delete")
     public Map<String, Object> plugList(@PathVariable("plugName") String plugName, @RequestParam Object obj) throws Exception {
         logger.info("testPlug");
@@ -131,8 +144,9 @@ public class PlugApi {
             }catch (Exception e){
                 classname = "accountService";
             }
-            AccountService testImp= (AccountService) applicationContext.getBean(classname);
-            map.put("datas", testImp.getByName("admin"));
+            executePlugService(plugName,"get","ss");
+//            PlugService testImp=  applicationContext.getBean(classname);
+            map.put("datas", ("admin"));
             return map;
         } catch (Exception e) {
             return ExceptionHandle.buildExceptMsg(e);
