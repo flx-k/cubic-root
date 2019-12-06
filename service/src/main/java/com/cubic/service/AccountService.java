@@ -1,9 +1,13 @@
 package com.cubic.service;
 
 import com.cubic.dao.AccountDAO;
+import com.cubic.dao.AccountPasswordDAO;
 import com.cubic.dao.plug.PlugDAO;
 import com.cubic.model.Account;
-import com.cubic.base.StringUtil;
+import com.cubic.model.AccountPassword;
+import com.cubic.util.base.StringUtil;
+import com.cubic.util.exception.ExistException;
+import com.cubic.util.exception.NotExistException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,12 +21,16 @@ public final class AccountService {
     @Autowired
     private AccountDAO accountDAO;
     @Autowired
-    private PlugDAO plugDAO;
+    private AccountPasswordDAO accountPasswordDAO;
 
-    public void insertUser(Account account){
-
+    public boolean insertUser(Account account) throws ExistException {
+        Account account1=accountDAO.getByName(account);
+        if(null!=account1)
+            throw new ExistException("帐号");
+        account.setId("USER_"+StringUtil.buildID());
         account.setAuths("USER");
         account.setPwd(new BCryptPasswordEncoder().encode(account.getPwd()));
+        accountPasswordDAO.insert(new AccountPassword(account));
         account.setEnable(true);
         account.setExpired(false);
         account.setCredentialsExpired(false);
@@ -30,13 +38,16 @@ public final class AccountService {
         account.setLocked(false);
         account.setCreateTime(new Timestamp(System.currentTimeMillis()));
         account.setLastOnlineTime(account.getCreateTime());
-        account.setId("USER_"+StringUtil.buildID());
+        account.setPwd(null);
         accountDAO.insert(account);
+        return true;
     }
-    public Account getByName(String name){
-        Account account=new Account();
-        account.setName(name);
-        return accountDAO.getOne(account);
+    public Account getByName(String name) throws NotExistException {
+        Account account=accountDAO.getByName(Account.buildByName(name));
+        if(null==account){
+            throw new NotExistException("帐号");
+        }
+        return account;
     }
     public void testSQL(String sql){
         Gson g=new Gson();

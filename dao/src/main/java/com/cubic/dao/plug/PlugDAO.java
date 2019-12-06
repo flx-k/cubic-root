@@ -1,7 +1,7 @@
 package com.cubic.dao.plug;
 
-import com.cubic.base.BaseSQL;
-import com.cubic.base.SimpleParam;
+import com.cubic.util.base.BaseSQL;
+import com.cubic.util.base.SimpleParam;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;

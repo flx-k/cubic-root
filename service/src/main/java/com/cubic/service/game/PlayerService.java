@@ -1,17 +1,13 @@
 package com.cubic.service.game;
 
-import com.cubic.base.SimpleParam;
 import com.cubic.dao.game.PlayerDAO;
-import com.cubic.exception.ExistException;
+import com.cubic.util.exception.ExistException;
 import com.cubic.model.game.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public final class PlayerService {

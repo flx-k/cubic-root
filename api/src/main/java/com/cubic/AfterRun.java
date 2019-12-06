@@ -1,15 +1,9 @@
 package com.cubic;
 
-import com.cubic.api.TestApi;
-import com.cubic.base.ClassUtil;
-import com.cubic.base.JARChange;
-import com.cubic.model.Account;
-import com.cubic.service.AccountService;
+import com.cubic.util.base.JARChange;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;

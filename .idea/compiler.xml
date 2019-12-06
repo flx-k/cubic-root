@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="util" />
         <module name="api" />
         <module name="plugs" />
+        <module name="util" />
         <module name="dao" />
         <module name="service" />
       </profile>
@@ -17,18 +17,17 @@
       <module name="api" target="1.8" />
       <module name="cubic-root" target="1.8" />
       <module name="dao" target="1.8" />
-      <module name="plug" target="1.8" />
       <module name="plugs" target="1.8" />
       <module name="service" target="1.8" />
       <module name="util" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
+    <option name="PREFER_TARGET_JDK_COMPILER" value="false" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api" options="-parameters" />
-      <module name="cubic-root" options="-parameters" />
+      <module name="cubic-root" options="" />
       <module name="dao" options="-parameters" />
-      <module name="plug" options="-parameters" />
       <module name="plugs" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="util" options="-parameters" />

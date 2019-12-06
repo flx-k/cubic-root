@@ -1,7 +1,7 @@
 package com.cubic.dao.base;
 
-import com.cubic.base.BaseSQL;
-import com.cubic.base.SimpleParam;
+import com.cubic.util.base.BaseSQL;
+import com.cubic.util.base.SimpleParam;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -20,6 +20,10 @@ public interface BaseDAO<T> {
 
     @SelectProvider(type = BaseSQL.class, method = "select")
     List<T> select(SimpleParam simpleParam);
+//    @DeleteProvider(type = BaseSQL.class, method = "delete" )
+//    void delete(SimpleParam simpleParam);
+    @DeleteProvider(type = BaseSQL.class, method = "deleteObj" )
+    void delete(T obj);
     @SelectProvider(type = BaseSQL.class, method = "count")
     Long count(SimpleParam simpleParam);
     @SelectProvider(type = BaseSQL.class, method = "buildSql")
@@ -32,5 +36,9 @@ public interface BaseDAO<T> {
 
     @SelectProvider(type = BaseSQL.class, method = "getOne")
     T getOne(T obj);
+    @SelectProvider(type = BaseSQL.class, method = "getById")
+    T getById(T obj);
+    @SelectProvider(type = BaseSQL.class, method = "getByName")
+    T getByName(T obj);
 
 }

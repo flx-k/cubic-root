@@ -22,6 +22,16 @@ public class Account implements UserDetails {
     private Boolean credentialsExpired;
     private Boolean enable;
 
+    public static Account buildById(String id) {
+        Account account=new Account();
+        account.setId(id);
+        return account;
+    }
+    public static Account buildByName(String name) {
+        Account account=new Account();
+        account.setName(name);
+        return account;
+    }
 
     public Boolean getExpired() {
         return expired;
