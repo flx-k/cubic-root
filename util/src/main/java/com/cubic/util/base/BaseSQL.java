@@ -30,7 +30,7 @@ public class BaseSQL {
         }
         sql.FROM(StringUtil.upper2Lower(cla.getSimpleName()));
         for (String str : arr) {
-            sql.VALUES(StringUtil.upper2Lower(str) , "  #{" + StringUtil.upper2Lower(str) + "}");
+            sql.WHERE(StringUtil.upper2Lower(str) +"=  #{" + str + "}");
         }
         System.out.println(sql.toString());
         return sql.toString();
@@ -59,7 +59,7 @@ public class BaseSQL {
         for (Field field : fields) {
             field.setAccessible(true);
             if (null != field.get(obj)) {
-                sql.VALUES(StringUtil.upper2Lower(field.getName()), "#{" + field.getName() + "}");
+                sql.WHERE(StringUtil.upper2Lower(field.getName()) +"= #{" + field.getName() + "}");
             }
         }
         System.out.println(sql.toString());
@@ -71,7 +71,7 @@ public class BaseSQL {
         SQL sql = new SQL();
         sql.SELECT("*");
         sql.FROM("`"+StringUtil.upper2Lower(cla.getSimpleName())+"`");
-        sql.VALUES("name", "#{name}");
+        sql.WHERE("name = #{name}");
         System.out.println(sql.toString());
         return sql.toString();
     }
@@ -80,7 +80,7 @@ public class BaseSQL {
         SQL sql = new SQL();
         sql.SELECT("*");
         sql.FROM(StringUtil.upper2Lower(cla.getSimpleName()));
-        sql.VALUES("id", "#{id}");
+        sql.WHERE("id = #{id}");
         System.out.println(sql.toString());
         return sql.toString();
     }

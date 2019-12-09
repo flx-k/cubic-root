@@ -1,12 +1,18 @@
 package com.cubic.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Groups {
     private String id;
     private String name;
     private Timestamp createTime;
     private String desc;
+    private List<Account> accounts;
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
 
     public static Groups buidById(String id) {
         Groups g=new Groups();

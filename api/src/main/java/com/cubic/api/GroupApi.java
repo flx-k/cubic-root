@@ -37,6 +37,11 @@ public class GroupApi {
         }
     }
 
+    /**
+     * 查询
+     * @param name
+     * @return
+     */
     @RequestMapping("/group/name/{name}")
     public Map getByName(@PathVariable("name") String name) {
         return new Result(groupService.getByName(name)).toMap();
@@ -46,6 +51,7 @@ public class GroupApi {
     public Map getById(@PathVariable("id") String id) {
         return new Result(groupService.getByName(id)).toMap();
     }
+
 
 
 }

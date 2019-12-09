@@ -21,6 +21,11 @@ public class Account implements UserDetails {
     private Boolean locked;
     private Boolean credentialsExpired;
     private Boolean enable;
+    private List<Groups> groups;
+
+    public void setGroups(List<Groups> groups) {
+        this.groups = groups;
+    }
 
     public static Account buildById(String id) {
         Account account=new Account();

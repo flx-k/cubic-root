@@ -1,0 +1,77 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cubic.dao.AccountGroupDAO">
+
+    <resultMap type="com.cubic.model.Account" id="accounts">
+        <id column="a_id" property="id"/>
+        <result column="a_name" property="name"/>
+        <result column="a_create_time" property="createTime"/>
+        <result column="a_level" property="level"/>
+        <result column="a_last_online_time" property="lastOnlineTime"/>
+        <result column="a_auths" property="auths"/>
+    </resultMap>
+
+    <resultMap type="com.cubic.model.Groups" id="groups">
+        <id column="g_id" property="id"/>
+        <result column="g_name" property="name"/>
+        <result column="g_create_time" property="createTime"/>
+        <result column="g_desc" property="desc"/>
+    </resultMap>
+
+    <resultMap type="com.cubic.model.Groups" id="groupsMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="create_time" property="createTime"/>
+        <result column="`desc`" property="desc"/>
+        <association property="accounts" resultMap="accounts"/>
+    </resultMap>
+
+    <resultMap type="com.cubic.model.Account" id="accountMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="create_time" property="createTime"/>
+        <result column="`level`" property="level"/>
+        <result column="last_online_time" property="lastOnlineTime"/>
+        <result column="auths" property="auths"/>
+        <association property="groups" resultMap="groups"/>
+    </resultMap>
+    <select id="selectAccount" resultMap="accountMap">
+        select
+        a.id as id,
+        a.name as name ,
+        a.create_time as create_time,
+        a.auths as auths,
+        a.last_online_time as last_online_time,
+        a.level as level,
+        g.id as g_id,
+        g.name as g_name,
+        g.desc as g_desc,
+        g.create_time as g_create_time
+        from account as a
+        LEFT JOIN group_member as gm on(gm.member_id = a.id)
+        LEFT JOIN `groups` as g on (g.id = gm.group_id)
+
+    </select>
+    <select id="selectGroups" resultMap="groupsMap">
+        select
+        g.id as id,
+        g.name as name,
+        g.desc as `desc`,
+        g.create_time as create_time,
+        a.id as a_id,
+        a.name as a_name ,
+        a.create_time as a_create_time,
+        a.auths as a_auths,
+        a.last_online_time as a_last_online_time,
+        a.level as a_level
+        from groups as g
+        LEFT JOIN group_member as gm on(gm.group_id = g.id)
+        LEFT JOIN account as a on (gm.member_id = a.id )
+
+    </select>
+
+
+
+</mapper>
