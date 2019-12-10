@@ -37,7 +37,7 @@
         <result column="auths" property="auths"/>
         <association property="groups" resultMap="groups"/>
     </resultMap>
-    <select id="selectAccount" resultMap="accountMap">
+    <select id="selectAccount" parameterType="String" resultMap="accountMap">
         select
         a.id as id,
         a.name as name ,
@@ -52,9 +52,14 @@
         from account as a
         LEFT JOIN group_member as gm on(gm.member_id = a.id)
         LEFT JOIN `groups` as g on (g.id = gm.group_id)
+        <where>
+            <if test="name !=null">
+                and a.name = #{name}
+            </if>
+        </where>
 
     </select>
-    <select id="selectGroups" resultMap="groupsMap">
+    <select id="selectGroups" parameterType="String" resultMap="groupsMap">
         select
         g.id as id,
         g.name as name,
@@ -69,7 +74,11 @@
         from groups as g
         LEFT JOIN group_member as gm on(gm.group_id = g.id)
         LEFT JOIN account as a on (gm.member_id = a.id )
-
+        <where>
+            <if test="name !=null">
+                and g.name = #{name}
+            </if>
+        </where>
     </select>
 
 

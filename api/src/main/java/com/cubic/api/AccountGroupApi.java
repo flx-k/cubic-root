@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,13 +19,32 @@ public class AccountGroupApi {
     private AccountGroupService accountGroupService;
 
     @RequestMapping("/user/desc/list")
-    public Map listAccount(){
-        return new Result(accountGroupService.getAccount()).toMap();
+    public Map listAccounts() {
+        return new Result(accountGroupService.getAccount(null)).toMap();
 
     }
+
+    @RequestMapping("/user/{name}/desc")
+    public Map getAccount(@PathVariable("name") String name) {
+        List list = accountGroupService.getAccount(name);
+        if (list.size() > 0)
+            return new Result(list.get(0)).toMap();
+        else
+            return new Result("未找到:" + name).toMap();
+    }
+
     @RequestMapping("/group/desc/list")
-    public Map descGroup() {
-        return new Result(accountGroupService.getGroups()).toMap();
+    public Map descGroups() {
+        return new Result(accountGroupService.getGroups(null)).toMap();
+    }
+
+    @RequestMapping("/group/{name}/desc")
+    public Map getGroup(@PathVariable("name") String name) {
+        List list = accountGroupService.getGroups(name);
+        if (list.size() > 0)
+            return new Result(list.get(0)).toMap();
+        else
+            return new Result("未找到:" + name).toMap();
     }
 
 }

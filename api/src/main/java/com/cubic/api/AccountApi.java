@@ -37,8 +37,8 @@ public class AccountApi {
         }
 
     }
-    @RequestMapping("/user/register/{name}/{password}")
-    public Map register(@PathVariable("name") String name,@PathVariable("password") String password){
+    @RequestMapping("/user/register/{name}")
+    public Map register(@PathVariable("name") String name,@RequestParam String password){
         Account account=new Account();
         account.setName(name);
         account.setPwd(password);

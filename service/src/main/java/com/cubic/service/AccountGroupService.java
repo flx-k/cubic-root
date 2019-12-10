@@ -19,11 +19,11 @@ public final class AccountGroupService {
     private PlugDAO plugDAO;
     @Autowired
     private AccountGroupDAO accountGroupDAO;
-    public List<Account> getAccount(){
-        return accountGroupDAO.selectAccount();
+    public List<Account> getAccount(String name){
+        return accountGroupDAO.selectAccount(name);
     }
-    public List<Groups> getGroups(){
-        return accountGroupDAO.selectGroups();
+    public List<Groups> getGroups(String name){
+        return accountGroupDAO.selectGroups(name);
     }
 
 }
